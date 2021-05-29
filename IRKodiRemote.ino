@@ -9,6 +9,10 @@
 // - IRRemote v2.x
 //  See this link to upgrade from 2.x
 //  https://github.com/Arduino-IRremote/Arduino-IRremote#converting-your-program-to-the-31-version
+//
+//  See the custom lightened IRremote.h:
+//  - The sending functions of all protocols are deactivated to keep only the receiving ones
+//  - Only the NEC protocol is enabled
 // - KeyboardAzertyFr v1.0.1
 // Hardware connections:
 //     IR Receiver on Pins GND, VCC and A2
