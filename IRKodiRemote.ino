@@ -33,9 +33,13 @@
 //#include "LG.h"
 #include "Grandin.h"
 
-// Disable unwanted protocols
-// Switch defines in ~/Arduino/libraries/IRremote/IRremote.h
-#include <IRremote.h>
+/*
+ * Specify which protocol(s) should be used for decoding.
+ * If no protocol is defined, all protocols are active.
+ */
+#define DECODE_NEC
+#define INT_SIZE    32
+#include <IRremote.hpp>
 
 /// Internal configuration ////////////////////////////////////////////////////
 #ifdef FR_LAYOUT
@@ -71,13 +75,11 @@ unsigned long previousCode;
 unsigned long repetitionTime = 0;
 bool          isPreviousRepeatable = false;
 
-// Init IR receiver
-IRrecv irrecv(RECV_PIN);
-
 
 void setup()
 {
-    irrecv.enableIRIn();    // Start the receiver
+    // Init & Start the receiver
+    IrReceiver.begin(RECV_PIN, ENABLE_LED_FEEDBACK);
 
     pinMode(RXLED, OUTPUT); // Set RX LED as an output
 
@@ -108,9 +110,7 @@ void setup()
 
 void loop()
 {
-    decode_results results;         // Somewhere to store the results
-
-    if (!irrecv.decode(&results)) { // Grab an IR code
+    if (!IrReceiver.decode()) { // Grab an IR code
         return;
     }
 
@@ -124,15 +124,37 @@ void loop()
     // Press a key on the simulated keyboard
     // Change the decode type to your remote type (see test mode)
     // 0x03: NEC
-    if (results.decode_type == 0x03) {
-        if (results.value == 0xFFFFFFFF) {
-            // Potential repetition code
-            if (!isPreviousRepeatable) {
-                goto end;
-            }
+    if (IrReceiver.decodedIRData.protocol == NEC) {
+          // Detect repetitions (IrReceiver.decodedIRData.decodedRawData == 0)
+          // See https://github.com/Arduino-IRremote/Arduino-IRremote/blob/a63162a0e0c5f6bf77b1b65cac1554e3f70fe7f8/src/IRReceive.hpp#L1014
+          if (IrReceiver.decodedIRData.flags & (IRDATA_FLAGS_IS_AUTO_REPEAT | IRDATA_FLAGS_IS_REPEAT)) {
+              // Potential repetition code ?
+              if (!isPreviousRepeatable) {
+                  goto end;
+              }
 
+              uint32_t gap = (uint32_t) IrReceiver.decodedIRData.rawDataPtr->rawbuf[0] * MICROS_PER_TICK;
+
+              if (gap > 300000) { // MAX_MS_BETWEEN_2_REPS * 1000
+                  // Elapsed time between 2 repetititions too long
+                  // Avoid repetitions received with missed primary code.
+                  // Disable this serie of repetitions by ignoring the next 0xFFFFF codes
+                  isPreviousRepeatable = false;
+
+                  #ifdef TESTMODE
+                  Serial.println("bad rep, missing press");
+                  #endif
+              } else if (gap > 80000) {
+                  // Elapsed time since the key press is acceptable
+                  // Avoid repetitions that are emitted to soon
+                  // Note: If not using timer since the first press, think about the fact that the first gap is ~39ms, then the next gaps are ~95ms.
+                  // Alternative condition: currentTime - lastPressTime > MIN_MS_BETWEEN_2_PRESS
+                  // TL;DR: The timer allows to wait more than 95ms since the first press.
+                  sendKeystrokes(previousCode);
+              }
+
+            // TODO: delete millis calls everywhere ?
             // Repeat previous key press
-
             unsigned long currentTime = millis();
 
             #ifdef TESTMODE
@@ -146,25 +168,13 @@ void loop()
             Serial.println(currentTime - repetitionTime);
             #endif
 
-            if (currentTime - repetitionTime > MAX_MS_BETWEEN_2_REPS) {
-                // Elapsed time between 2 repetititions too long
-                // Disable this serie of repetitions by ignoring the next 0xFFFFF codes
-                isPreviousRepeatable = false;
-
-                #ifdef TESTMODE
-                Serial.println("bad rep, missing press");
-                #endif
-            } else if (currentTime - lastPressTime > MIN_MS_BETWEEN_2_PRESS) {
-                // Elapsed time since the key press is acceptable
-                sendKeystrokes(&previousCode);
-            }
             // Set new repetition time for the next one
             repetitionTime = currentTime;
         } else {
             // Simple key press
-            sendKeystrokes(&results.value);
+            sendKeystrokes(IrReceiver.decodedIRData.decodedRawData);
             // Keep the code for potential following repetitions
-            previousCode = results.value;
+            previousCode = IrReceiver.decodedIRData.decodedRawData;
             // Store the timestamp of this accepted code
             lastPressTime  = millis();
             repetitionTime = lastPressTime;
@@ -173,7 +183,7 @@ void loop()
 
 end:
     // Ready to receive the next value
-    irrecv.resume();
+    IrReceiver.resume();
 }
 
 
