@@ -116,9 +116,14 @@ void loop()
 
     #ifdef TESTMODE
     // In test mode, print the HEX code on the serial monitor
-    Serial.print(results.decode_type, HEX);
-    Serial.print(" - ");
-    Serial.println(results.value, HEX);
+    /* Legacy info
+    Serial.print("Protocol: ");
+    Serial.print(IrReceiver.decodedIRData.protocol, HEX);
+    Serial.print(" - Raw code: ");
+    Serial.println(IrReceiver.decodedIRData.decodedRawData, HEX);
+    */
+    // Use new print version
+    IrReceiver.printIRResultShort(&Serial);
     #endif
 
     // Press a key on the simulated keyboard
@@ -159,17 +164,20 @@ void loop()
 
             #ifdef TESTMODE
             // Elapsed since the key press
+            Serial.print("Since key press: ");
             Serial.print(currentTime);
             Serial.print(" - ");
             Serial.print(lastPressTime);
             Serial.print(" = ");
             Serial.println(currentTime - lastPressTime);
             // Elapsed time between 2 repetititions
+            Serial.print("Since last rep: ");
             Serial.println(currentTime - repetitionTime);
             #endif
 
             // Set new repetition time for the next one
             repetitionTime = currentTime;
+
         } else {
             // Simple key press
             sendKeystrokes(IrReceiver.decodedIRData.decodedRawData);
