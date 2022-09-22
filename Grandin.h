@@ -20,7 +20,7 @@
 #define SKIP_NEXT 0x2FDD827 // ch + > page up (skip to next)
 #define SKIP_PREVIOUS 0x2FDF807 // ch - > page down (skip to previous)
 //#define LIST 0x2FD18E7 // list
-//#define SLEEP 0x2FDB04F // sleep
+#define SLEEP 0x2FDB04F // sleep
 //#define EPG 0x2FD926D // EPG
 //#define FAVORITES 0x2FD42BD // favorites
 #define REWIND 0x2FD12ED // red (rewind) > rewind
@@ -39,7 +39,8 @@
 
 // Repeatable keys
 
-#define BACK 0x2FD22DD // exit > back
+#define BACK 0x2FD02FD // repeat/loop > back
+#define EXIT 0x2FD22DD // exit > exit
 #define UP 0x2FD9867 // up
 #define DOWN 0x2FDB847 // down
 #define LEFT 0x2FD629D // left > left (seek backward)

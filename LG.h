@@ -19,7 +19,7 @@
 #define SKIP_NEXT 0x20DF00FF // ch + > page up (skip to next)
 #define SKIP_PREVIOUS 0x20DF807F // ch - > page down (skip to previous)
 //#define LIST 0x20DFCA35 // list
-//#define SLEEP 0x20DF10EF // sleep
+#define SLEEP 0x20DF10EF // sleep
 //#define FAVORITES 0x20DF7887 // favorites
 // 0x20DFD52A // guide
 // 0x20DF04FB // TEXT
@@ -43,8 +43,8 @@
 
 
 // Repeatable keys
-
-#define BACK 0x20DFDA25 // exit > back
+#define BACK 0x20DF14EB // back > back
+#define EXIT 0x20DFDA25 // exit > exit
 #define UP 0x20DF02FD // up
 #define DOWN 0x20DF827D // down
 #define LEFT 0x20DFE01F // left > left (seek backward)

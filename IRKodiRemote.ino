@@ -214,7 +214,7 @@ void sendKeystrokes(unsigned long *irCode)
       case SKIP_NEXT : Keyboard.write(KEY_PAGE_UP); break; // ch + > page up (skip to next)
       case SKIP_PREVIOUS : Keyboard.write(KEY_PAGE_DOWN); break; // ch - > page down (skip to previous)
       //case LIST : Keyboard.write(); break; // list
-      //case SLEEP : Keyboard.write(); break; // sleep
+      case SLEEP : Keyboard.write('s'); break; // sleep
       //case EPG : Keyboard.write(); break; // EPG
       //case FAVORITES : Keyboard.write(); break; // favorites
       case REWIND : Keyboard.write('r'); break; // red (rewind) > rewind
@@ -242,7 +242,8 @@ void sendKeystrokes(unsigned long *irCode)
     isPreviousRepeatable = true;
 
     switch (*irCode) {
-      case BACK : Keyboard.write(KEY_BACKSPACE); return; // exit > back
+      case BACK : Keyboard.write(KEY_BACKSPACE); return;
+      case EXIT : Keyboard.write(KEY_ESC); return;
       case UP : Keyboard.write(KEY_UP_ARROW); return; // up
       case DOWN : Keyboard.write(KEY_DOWN_ARROW); return; // down
       case LEFT : Keyboard.write(KEY_LEFT_ARROW); return; // left > left (seek backward)
