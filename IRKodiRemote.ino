@@ -190,7 +190,7 @@ end:
 
 uint32_t reverseBits(uint32_t n)
 {
-    int8_t pos = INT_SIZE - 1;     // maintient le décalage
+    int8_t pos = INT_SIZE - 1;     // shift position
 
     // Store reversed bits of the given value `n`. All bits are initialized to 0.
     uint32_t reverse = 0;
@@ -222,51 +222,41 @@ void sendKeystrokes(unsigned long &irCode)
 
     // Non repeatable keys
     switch (reverseIrCode) {
-      //case 0x2FD48B7 : Keyboard.write(); break; // poweroff
-      case INFO : Keyboard.write('i'); break; // info > info
-      case MUTE : Keyboard.write(KEY_F8); break; // mute > mute
-      case ONE : Keyboard.write('1'); break; // 1
-      case TWO : Keyboard.write('2'); break; // 2
-      case THREE : Keyboard.write('3'); break; // 3
-      case FOUR : Keyboard.write('4'); break; // 4
-      case FIVE : Keyboard.write('5'); break; // 5
-      case SIX : Keyboard.write('6'); break; // 6
-      case SEVEN : Keyboard.write('7'); break; // 7
-      case EIGHT : Keyboard.write('8'); break; // 8
-      case NINE : Keyboard.write('9'); break; // 9
-      case ZERO : Keyboard.write('0'); break; // 0
-      //case SOURCE : Keyboard.write(); break; // source
-      case NEXT_LANGUAGE : Keyboard.press(KEY_LEFT_CTRL); // audio > AudioNextLanguage
+      case INFO : Keyboard.write('i'); break;
+      case MUTE : Keyboard.write(KEY_F8); break;
+      case ONE : Keyboard.write('1'); break;
+      case TWO : Keyboard.write('2'); break;
+      case THREE : Keyboard.write('3'); break;
+      case FOUR : Keyboard.write('4'); break;
+      case FIVE : Keyboard.write('5'); break;
+      case SIX : Keyboard.write('6'); break;
+      case SEVEN : Keyboard.write('7'); break;
+      case EIGHT : Keyboard.write('8'); break;
+      case NINE : Keyboard.write('9'); break;
+      case ZERO : Keyboard.write('0'); break;
+      case NEXT_LANGUAGE : Keyboard.press(KEY_LEFT_CTRL); // AudioNextLanguage
         Keyboard.press('a');
         Keyboard.releaseAll();
         break;
-      //case MENU : Keyboard.write('c'); break; // menu
-      case ZOOM : Keyboard.write('z'); break; // screen size > Zoom/aspect ratio
-      //case LOOP : Keyboard.write(); break; // loop
-
-      case SELECT : Keyboard.write(KEY_RETURN); break; // enter > select
-
-      case SKIP_NEXT : Keyboard.write(KEY_PAGE_UP); break; // ch + > page up (skip to next)
-      case SKIP_PREVIOUS : Keyboard.write(KEY_PAGE_DOWN); break; // ch - > page down (skip to previous)
-      //case LIST : Keyboard.write(); break; // list
-      case SLEEP : Keyboard.write('s'); break; // sleep
-      //case EPG : Keyboard.write(); break; // EPG
-      //case FAVORITES : Keyboard.write(); break; // favorites
-      case REWIND : Keyboard.write('r'); break; // red (rewind) > rewind
-      case FAST_FORWARD : Keyboard.write('f'); break; // green (fast forward) > fast forward
-      case JUMP_BACKWARD : Keyboard.write('\''); break; // yellow (previous) > small seek step backwards 7 seconds //ù
-      case JUMP_FORWARD : Keyboard.write('1'); // blue (next) > jump forward 10 seconds.
+      //case MENU : Keyboard.write('c'); break;
+      case ZOOM : Keyboard.write('z'); break; // Zoom/aspect ratio
+      //case LOOP : Keyboard.write(); break;
+      case SELECT : Keyboard.write(KEY_RETURN); break;
+      case SKIP_NEXT : Keyboard.write(KEY_PAGE_UP); break;
+      case SKIP_PREVIOUS : Keyboard.write(KEY_PAGE_DOWN); break;
+      case SLEEP : Keyboard.write('s'); break;
+      case REWIND : Keyboard.write('r'); break;
+      case FAST_FORWARD : Keyboard.write('f'); break;
+      case JUMP_BACKWARD : Keyboard.write('\''); break;
+      case JUMP_FORWARD : Keyboard.write('1'); // jump forward 10 seconds.
         Keyboard.write('0');
         Keyboard.write(KEY_RIGHT_ARROW);
         break;
-      case PAUSE_PLAY : Keyboard.write(' '); break; // ? (play/pause) > pause/play
-      case STOP : Keyboard.write('x'); break; // still (stop) > stop
-      case NEXT_SUBTITLE : Keyboard.write('l'); break; // subtitle > next subtitle
-      //case RADIO : Keyboard.write(); break; // radio
-      //case 0x2FDEA15 : Keyboard.write(); break; // ?
-      //case 0x2FDBA45 : Keyboard.write(); break; // dmp
-      case MENU : Keyboard.write('c'); break; // index > contextual menu
-      case SCREENSHOT : Keyboard.press(KEY_LEFT_CTRL); // record > screenshot
+      case PAUSE_PLAY : Keyboard.write(' '); break;
+      case STOP : Keyboard.write('x'); break;
+      case NEXT_SUBTITLE : Keyboard.write('l'); break;
+      case MENU : Keyboard.write('c'); break; // contextual menu
+      case SCREENSHOT : Keyboard.press(KEY_LEFT_CTRL);
         Keyboard.press('s');
         Keyboard.releaseAll();
         break;
@@ -279,12 +269,12 @@ void sendKeystrokes(unsigned long &irCode)
     switch (reverseIrCode) {
       case BACK : Keyboard.write(KEY_BACKSPACE); return;
       case EXIT : Keyboard.write(KEY_ESC); return;
-      case UP : Keyboard.write(KEY_UP_ARROW); return; // up
-      case DOWN : Keyboard.write(KEY_DOWN_ARROW); return; // down
-      case LEFT : Keyboard.write(KEY_LEFT_ARROW); return; // left > left (seek backward)
-      case RIGHT : Keyboard.write(KEY_RIGHT_ARROW); return; // right > right (seek forward)
-      case VOL_UP : Keyboard.write('+'); return; // vol + > vol up
-      case VOL_DOWN : Keyboard.write('-'); return; // vol - > vol down
+      case UP : Keyboard.write(KEY_UP_ARROW); return;
+      case DOWN : Keyboard.write(KEY_DOWN_ARROW); return;
+      case LEFT : Keyboard.write(KEY_LEFT_ARROW); return; // seek backward
+      case RIGHT : Keyboard.write(KEY_RIGHT_ARROW); return; // seek forward
+      case VOL_UP : Keyboard.write('+'); return;
+      case VOL_DOWN : Keyboard.write('-'); return;
       default: break;
     }
 
