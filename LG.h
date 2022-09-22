@@ -16,55 +16,94 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
-#define INFO 0x20DF55AA // info
-#define MUTE 0x20DF906F // mute > mute
-#define ONE 0x20DF8877 // 1
-#define TWO 0x20DF48B7 // 2
-#define THREE 0x20DFC837 // 3
-#define FOUR 0x20DF28D7 // 4
-#define FIVE 0x20DFA857 // 5
-#define SIX 0x20DF6897 // 6
-#define SEVEN 0x20DFE817 // 7
-#define EIGHT 0x20DF18E7 // 8
-#define NINE 0x20DF9867 // 9
-#define ZERO 0x20DF08F7 // 0
-//#define SOURCE 0x20DFD02F // source
-#define NEXT_LANGUAGE 0x20DF8976 // audio > AudioNextLanguage
-#define ZOOM 0x20DF9E61 // screen size > Zoom/aspect ratio
-//#define LOOP 0x2FD02FD // loop
-#define SELECT 0x20DF22DD // enter > select
-#define SKIP_NEXT 0x20DF00FF // ch + > page up (skip to next)
-#define SKIP_PREVIOUS 0x20DF807F // ch - > page down (skip to previous)
-//#define LIST 0x20DFCA35 // list
-#define SLEEP 0x20DF10EF // sleep
-//#define FAVORITES 0x20DF7887 // favorites
-// 0x20DFD52A // guide
-// 0x20DF04FB // TEXT
-// 0x20DF847B // T.OPT
-// 0x20DFC23D // settings
-// 0x20DF14EB // back
-// 0x20DF0CF3 // AV MODE
-#define REWIND 0x20DFF10E // rewind > rewind
-#define FAST_FORWARD 0x20DF718E // fast forward > fast forward
-// 0x20DF4EB1 // red
-// 0x20DF8E71 // green
-#define JUMP_BACKWARD 0x20DFC639 // yellow (previous) > small seek step backwards 7 seconds //ù
-#define JUMP_FORWARD 0x20DF8679 // blue (next) > jump forward 10 seconds.
-#define PAUSE_PLAY 0x20DF0DF2 // play, 20DF5DA2 (pause) > pause/play
-#define STOP 0x20DF8D72 // still (stop) > stop
-#define NEXT_SUBTITLE 0x20DF9C63 // subtitle > next subtitle
-//#define RADIO 0x20DF0FF0 // radio
-//#define MENU 0x20DFA25D // quick menu > contextual menu
-#define MENU 0x20DF4EB1 // red > quick menu
-#define SCREENSHOT 0x20DFBD42 // record > screenshot
+// Remote definitions
+#define R_INFO            0x20DF55AA
+#define R_MUTE            0x20DF906F
+#define R_ONE             0x20DF8877
+#define R_TWO             0x20DF48B7
+#define R_THREE           0x20DFC837
+#define R_FOUR            0x20DF28D7
+#define R_FIVE            0x20DFA857
+#define R_SIX             0x20DF6897
+#define R_SEVEN           0x20DFE817
+#define R_EIGHT           0x20DF18E7
+#define R_NINE            0x20DF9867
+#define R_ZERO            0x20DF08F7
+//#define R_SOURCE          0x20DFD02F
+#define R_AUDIO           0x20DF8976
+//#define R_MENU            0x20DFA25D
+#define R_SCREEN_SIZE     0x20DF9E61
+//#define R_LOOP
+#define R_OK              0x20DF22DD
+#define R_CHANNEL_UP      0x20DF00FF
+#define R_CHANNEL_DOWN    0x20DF807F
+//#define R_LIST            0x20DFCA35
+#define R_SLEEP           0x20DF10EF
+//#define R_FAVORITES       0x20DF7887
+//#define R_GUIDE           0x20DFD52A
+//#define R_TEXT            0x20DF04FB
+//#define R_TOPT            0x20DF847B
+//#define R_SETTINGS        0x20DFC23D
+//#define R_AVMODE          0x20DF0CF3
+#define R_REWIND          0x20DFF10E
+#define R_FORWARD         0x20DF718E
+#define R_RED             0x20DF4EB1
+#define R_GREEN           0x20DF8E71
+#define R_YELLOW          0x20DFC639
+#define R_BLUE            0x20DF8679
+#define R_PLAY_PAUSE      0x20DF0DF2
+#define R_STOP            0x20DF8D72
+#define R_SUBTITLE        0x20DF9C63
+//#define R_RADIO           0x20DF0FF0
+#define R_RECORD          0x20DFBD42
+#define R_BACK            0x20DF14EB
+//#define R_REPEAT
+#define R_EXIT            0x20DFDA25
+#define R_UP              0x20DF02FD
+#define R_DOWN            0x20DF827D
+#define R_LEFT            0x20DFE01F
+#define R_RIGHT           0x20DF609F
+#define R_VOL_UP          0x20DF40BF
+#define R_VOL_DOWN        0x20DFC03F
 
+// Mappings Remote > Kodi
+// Non repeatable keys
+#define INFO              R_INFO
+#define MUTE              R_MUTE
+#define ONE               R_ONE
+#define TWO               R_TWO
+#define THREE             R_THREE
+#define FOUR              R_FOUR
+#define FIVE              R_FIVE
+#define SIX               R_SIX
+#define SEVEN             R_SEVEN
+#define EIGHT             R_EIGHT
+#define NINE              R_NINE
+#define ZERO              R_ZERO
+#define NEXT_LANGUAGE     R_AUDIO
+#define ZOOM              R_SCREEN_SIZE
+#define SELECT            R_OK
+#define SKIP_NEXT         R_CHANNEL_UP
+#define SKIP_PREVIOUS     R_CHANNEL_DOWN
+#define SLEEP             R_SLEEP
+#define REWIND            R_REWIND
+#define FAST_FORWARD      R_FORWARD
+#define JUMP_BACKWARD     R_YELLOW
+#define JUMP_FORWARD      R_BLUE
+#define PAUSE_PLAY        R_PLAY_PAUSE
+#define STOP              R_STOP
+#define NEXT_SUBTITLE     R_SUBTITLE
+//#define RADIO             R_RADIO
+//#define MENU              R_MENU
+#define MENU              R_RED
+#define SCREENSHOT        R_RECORD
 
 // Repeatable keys
-#define BACK 0x20DF14EB // back > back
-#define EXIT 0x20DFDA25 // exit > exit
-#define UP 0x20DF02FD // up
-#define DOWN 0x20DF827D // down
-#define LEFT 0x20DFE01F // left > left (seek backward)
-#define RIGHT 0x20DF609F // right > right (seek forward)
-#define VOL_UP 0x20DF40BF // vol + > vol up
-#define VOL_DOWN 0x20DFC03F // vol - > vol down
+#define BACK              R_BACK
+#define EXIT              R_EXIT
+#define UP                R_UP
+#define DOWN              R_DOWN
+#define LEFT              R_LEFT
+#define RIGHT             R_RIGHT
+#define VOL_UP            R_VOL_UP
+#define VOL_DOWN          R_VOL_DOWN
