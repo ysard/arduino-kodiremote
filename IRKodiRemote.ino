@@ -2,23 +2,17 @@
 // to be used as a remote receiver for Kodi Open Source Home Theater Software
 
 // Original work: By Andre Miller - www.andremiller.net - 2016-11-16
-// Updated: By Ysard - 2019-2021
+// Updated: By Ysard - 2019-2022
 
 // For Arduino Pro Micro
 // Requirements:
-// - IRRemote v2.x
-//  See this link to upgrade from 2.x
-//  https://github.com/Arduino-IRremote/Arduino-IRremote#converting-your-program-to-the-31-version
-//
-//  See the custom lightened IRremote.h:
-//  - The sending functions of all protocols are deactivated to keep only the receiving ones
-//  - Only the NEC protocol is enabled
+// - IRRemote v3.x
 // - KeyboardAzertyFr v1.0.1
 // Hardware connections:
-//     IR Receiver on Pins GND, VCC and A2
+//  IR Receiver on Pins GND, VCC and A2
 
-// Hint: Test keyboard events on GNU/Linux:
-// xev -event keyboard
+// Hint: Command to test keyboard events on GNU/Linux:
+//  xev -event keyboard
 
 /// User configuration ////////////////////////////////////////////////////////
 
