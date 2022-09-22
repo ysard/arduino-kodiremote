@@ -18,7 +18,7 @@
 
 // Uncomment this line to run in test mode.
 // In test mode the hex codes of buttons pressed on your remote will be printed to the serial console
-// #define TESTMODE
+//#define TESTMODE
 
 // Configure targeted keyboard layout
 #define FR_LAYOUT
