@@ -186,17 +186,40 @@ end:
     IrReceiver.resume();
 }
 
-
-void sendKeystrokes(unsigned long *irCode)
+uint32_t reverseBits(uint32_t n)
 {
+    int8_t pos = INT_SIZE - 1;     // maintient le décalage
+
+    // Store reversed bits of the given value `n`. All bits are initialized to 0.
+    uint32_t reverse = 0;
+
+    // Until all bits are processed
+    while (pos >= 0 && n)
+    {
+        // If the current bit is 1, put this bit in the result at the correct position
+        if (n & 1) {
+            reverse = reverse | (1ul << pos);
+        }
+
+        n >>= 1;                // Delete the current bit (right shift of 1/divide by 2)
+        pos--;                  // Update pos to the next one
+    }
+    return reverse;
+}
+
+void sendKeystrokes(unsigned long &irCode)
+{
+    uint32_t reverseIrCode = reverseBits(irCode);
     // Change the values to match your remote (see test mode)
     #ifdef TESTMODE
     Serial.print("sendKeystrokes: ");
-    Serial.println(*irCode, HEX);
+    Serial.print(irCode, HEX);
+    Serial.print(" - Reverse code: ");
+    Serial.println(reverseIrCode, HEX);
     #endif
 
     // Non repeatable keys
-    switch (*irCode) {
+    switch (reverseIrCode) {
       //case 0x2FD48B7 : Keyboard.write(); break; // poweroff
       case INFO : Keyboard.write('i'); break; // info > info
       case MUTE : Keyboard.write(KEY_F8); break; // mute > mute
@@ -251,7 +274,7 @@ void sendKeystrokes(unsigned long *irCode)
     // Repeatable keys
     isPreviousRepeatable = true;
 
-    switch (*irCode) {
+    switch (reverseIrCode) {
       case BACK : Keyboard.write(KEY_BACKSPACE); return;
       case EXIT : Keyboard.write(KEY_ESC); return;
       case UP : Keyboard.write(KEY_UP_ARROW); return; // up
